@@ -7,16 +7,15 @@ hcl (Hair Color)
 ecl (Eye Color)
 pid (Passport ID)
 cid (Country ID) ->optional
-OR */
+*/
 
 const arrOfAllPassports = require("./input");
-// console.log("arrOfAllPassports in index:", arrOfAllPassports);
 
 const targetArray = ["byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid"];
 
-function checkPassport(arrOfProps, arrOfObjs) {
+function checkPassport(arrOfProps, arrOfPassports) {
     let validPassports = 0;
-    arrOfObjs.map((each, i) => {
+    arrOfPassports.map((each) => {
         const arrEachProps = Object.keys(each);
         let checker = (arr, target) => target.every((v) => arr.includes(v));
         const isValid = checker(arrEachProps, arrOfProps);
@@ -24,11 +23,13 @@ function checkPassport(arrOfProps, arrOfObjs) {
             validPassports++;
         }
     });
-    console.log("validPassports:", validPassports);
     return validPassports;
 }
 
-checkPassport(targetArray, arrOfAllPassports);
+const firstNumberOfValidPP = checkPassport(targetArray, arrOfAllPassports);
+console.log(
+    `1st passport check finds \x1b[35m${firstNumberOfValidPP}\x1b[0m valid passports`
+);
 
 // Part 2
 // byr (Birth Year) - four digits; at least 1920 and at most 2002.
@@ -123,8 +124,13 @@ function checkPassportStrictly(arrOfProps, arrOfObjs) {
             }
         }
     });
-    console.log("validPassports:", validPassports);
     return validPassports;
 }
 
-checkPassportStrictly(targetArray, arrOfAllPassports);
+const secondNumberOfValidPP = checkPassportStrictly(
+    targetArray,
+    arrOfAllPassports
+);
+console.log(
+    `2nd passport check finds \x1b[35m${secondNumberOfValidPP}\x1b[0m valid passports`
+);
