@@ -1,4 +1,3 @@
-const { format } = require("path");
 const input = require("./unformattedInput");
 
 const matchPattern = /[\n\r]/;
