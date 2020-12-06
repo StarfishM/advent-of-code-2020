@@ -27,28 +27,56 @@ const inputData = require("./formatInput");
 // In the fifth group, everyone (all 1 person) answered "yes" to 1 question, b.
 // In this example, the sum of these counts is 3 + 0 + 1 + 1 + 1 = 6.
 let answerCount = 0;
-
+const alphabet = [
+    "a",
+    "b",
+    "c",
+    "d",
+    "e",
+    "f",
+    "g",
+    "h",
+    "i",
+    "j",
+    "k",
+    "l",
+    "m",
+    "n",
+    "o",
+    "p",
+    "q",
+    "r",
+    "s",
+    "t",
+    "u",
+    "v",
+    "w",
+    "x",
+    "y",
+    "z",
+];
 const countAnswers = (arr) => {
     console.log("arr:", arr);
     // group of on person count unique characters
     if (arr.length === 1) {
         arr[0] = String.prototype.concat(...new Set(arr[0]));
         answerCount += arr[0].length;
-        console.log("arr[0].length", arr[0].length);
     } else {
-        console.log("in else");
-        let strContainingChar = "";
-        for (let i = 0; i < arr.length; i++) {
-            const checkForChar = arr.map((str) => str.includes(arr[i]));
-            console.log("checkForChar", checkForChar);
-            if (checkForChar.every((el) => el == true)) {
-                strContainingChar += arr[i];
+        for (let i = 0; i < alphabet.length; i++) {
+            let appearsInAllStr = true;
+            const checkForChar = arr.map((str) => {
+                if (str.split("").every((el) => !el.includes(alphabet[i]))) {
+                    appearsInAllStr = false;
+                }
+            });
+            if (appearsInAllStr) {
+                answerCount++;
             }
         }
         strContainingChar = String.prototype.concat(
             ...new Set(strContainingChar)
         );
-        console.log("trContainingChar.length:", strContainingChar.length);
+        console.log("trContainingChar.length:", strContainingChar);
         answerCount += strContainingChar.length;
     }
     console.log("answerCount:", answerCount);

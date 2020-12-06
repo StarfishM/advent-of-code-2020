@@ -16,7 +16,7 @@ a
 b`;
 
 const matchPattern = /[\n\r]/;
-const formatInput = testData.split(matchPattern);
+const formatInput = input.split(matchPattern);
 
 //Format for part 1
 // const arrayOfAnswers = [];
@@ -44,7 +44,6 @@ const formatInput = testData.split(matchPattern);
 const arrayOfAnswers = [];
 let subArray = [];
 for (let i = 0; i < formatInput.length; i++) {
-    // console.log("conditional check", formatInput[i] != "");
     if (formatInput[i] != "") {
         subArray.push(formatInput[i]);
         if (formatInput[i + 1] == "" || formatInput[i + 1] == undefined) {
@@ -52,7 +51,6 @@ for (let i = 0; i < formatInput.length; i++) {
             subArray = [];
         }
     } else {
-        // arrayOfAnswers.push(subArray);
         subArray = [];
     }
 }
