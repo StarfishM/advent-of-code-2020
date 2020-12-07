@@ -20,12 +20,11 @@ const splitOnLineBreak = input.split(matchPatternLineBreak);
 let rulesMap = new Map();
 
 const turnIntoObjects = (str) => {
-    let outerBag = {};
-    outerBag.innerBags = [];
+    console.log("running turnIntoObject");
+    const innerBags = [];
     const splitOuterFromInner = str.split("bags contain");
-    const color = splitOuterFromInner[0].trim();
+    const outerBag = splitOuterFromInner[0].trim();
     const splitInnerBags = splitOuterFromInner[1].split(",");
-    outerBag.color = color;
     splitInnerBags
         .map((bag) => {
             let bagInBagObj = {};
@@ -41,12 +40,13 @@ const turnIntoObjects = (str) => {
                     .replace(".", "")
                     .trim();
                 bagInBagObj.amount = parseInt(bagsContained[1]);
-                outerBag.innerBags.push(bagInBagObj);
+                innerBags.push(bagInBagObj);
             }
         })
         .filter((bag) => bag);
-    allBags.push(outerBag);
+    rulesMap.set(outerBag, innerBags);
 };
 
 splitOnLineBreak.forEach((str) => turnIntoObjects(str));
+console.log("allBags:", rulesMap);
 module.exports = allBags;
