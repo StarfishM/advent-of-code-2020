@@ -20,7 +20,6 @@ const splitOnLineBreak = input.split(matchPatternLineBreak);
 let rulesMap = new Map();
 
 const turnIntoObjects = (str) => {
-    console.log("running turnIntoObject");
     const innerBags = [];
     const splitOuterFromInner = str.split("bags contain");
     const outerBag = splitOuterFromInner[0].trim();
@@ -48,5 +47,4 @@ const turnIntoObjects = (str) => {
 };
 
 splitOnLineBreak.forEach((str) => turnIntoObjects(str));
-console.log("allBags:", rulesMap);
-module.exports = allBags;
+module.exports = rulesMap;

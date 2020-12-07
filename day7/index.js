@@ -1,48 +1,48 @@
 // PART 1
 
+const rulesMap = require("./formatInput");
 const bagRules = require("./formatInput");
 
-function checkBagForGold(bag, targetColor) {
-    const bagContaining = bag.color;
-    bag.innerBags.forEach((elem) => {
-        if (elem[targetColor]) {
-            couldContainTarget.push(bagContaining);
+function checkBagForGold(color) {
+    if (color === "shiny gold") {
+        return true;
+    }
+    if (!bagRules.has(color)) {
+        return false;
+    }
+
+    const bagsContained = bagRules.get(color);
+    for (const bag of bagsContained) {
+        if (checkBagForGold(bag.color)) {
             return true;
-        } else {
-            return false;
         }
-    });
-
-    countBags = couldContainTarget.length;
+    }
+    return false;
 }
 
-function findOptionsInInnerBags(arrOfInnerBags, color) {
-    let optionsOneLevelDeep = arrOfInnerBags.filter((each) => each[color]);
-    console.log("optionsOneLevelDeep:", optionsOneLevelDeep);
+const outerBagColors = bagRules.keys();
+
+let total = 0;
+for (const color of outerBagColors) {
+    if (checkBagForGold(color) && color != "shiny gold") {
+        total++;
+    }
 }
 
-bagData.forEach((each) => {
-    checkBagObj(each, "shiny gold");
-});
+console.log("total number of potentiall carriers of shiny gold bags", total);
 
-bagData.forEach((each) => {
-    console.log("each.color", each.color);
-    console.log("each.innerBags", each.innerBags);
-    // countOptions++;
-    each.innerBags.forEach((elem) => {
-        for (let i = 0; i < couldContainTarget.length; i++) {
-            if (elem[couldContainTarget[i]]) {
-                couldContainTarget.push(each.color);
-                return;
-            }
-        }
-    });
-});
+// PART 2 How many individual bags are required inside your single shiny gold bag?
 
-couldContainTargetNested = [...new Set(couldContainTargetNested)];
-console.log("couldContainTarget:", couldContainTarget);
-console.log("couldContainTargetNested:", couldContainTargetNested);
-console.log(
-    "could Contains target",
-    couldContainTarget.length + couldContainTargetNested.length
-);
+function sumOfBagsInShinyGold(bagToCheck) {
+    let bagsTotalInShinyGold = 1;
+    const bagsInside = rulesMap.get(bagToCheck.color);
+    console.log("*****");
+    console.log("bagsInside:", bagsInside);
+    for (const containedBag of bagsInside) {
+        bagsTotalInShinyGold +=
+            containedBag.amount * sumOfBagsInShinyGold(containedBag);
+    }
+    return bagsTotalInShinyGold;
+}
+
+console.log(sumOfBagsInShinyGold({ amount: 1, color: "shiny gold" }) - 1);
