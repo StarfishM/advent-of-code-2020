@@ -11,9 +11,8 @@ const input = require("./unformattedInput");
 
 const matchPatternLineBreak = /[\n\r]/;
 const matchPatternOperator = /[+|-]/;
-const splitOnLineBreak = testInput.split(matchPatternLineBreak);
-console.log("testInput:", splitOnLineBreak);
-
+const splitOnLineBreak = input.split(matchPatternLineBreak);
+let instructionIndex = 0;
 const gameSteps = [];
 
 const turnIntoObjects = (str) => {
@@ -24,6 +23,8 @@ const turnIntoObjects = (str) => {
     const splitOperator = splitActionFromVals[1].match(matchPatternOperator);
     gameStep.operator = splitOperator[0];
     gameStep.value = +splitActionFromVals[1].substring(1);
+    gameStep.inGameindex = instructionIndex;
+    instructionIndex++;
     gameSteps.push(gameStep);
 };
 
