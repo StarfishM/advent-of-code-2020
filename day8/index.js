@@ -32,7 +32,7 @@ function checkStep(step, index) {
 // console.log("stepCount=", stepCount);
 let counter = 0;
 
-// PART 2 fix game to runthrough
+// PART 2 fix game to runthrough and find with which change the game exits normally
 
 const potentialsModified = [...gameData].filter(
     (each) => each.action === "nop" || each.action === "jmp"
